@@ -18,6 +18,8 @@ Todo CLI
 
 ## About
 
+Todo CLI is a simple todo list to manage your tasks writen in GO and styled with Nerd Fonts
+
 ### Installing
 
 Move the binary in the bin dir to your desired binary's dir
