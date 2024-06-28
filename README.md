@@ -18,7 +18,7 @@ Todo CLI
 
 ## About
 
-Todo CLI is a simple todo list to manage your tasks writen in GO and styled with Nerd Fonts
+Todo CLI is a simple to do list to manage your tasks. Written in GO and styled with [Nerd Fonts](https://www.nerdfonts.com/)
 
 ### Installing
 
@@ -37,7 +37,7 @@ go build
 To add a task to the list
 
 ```console
-todo -a <>
+todo -a <Task String>
 ```
 Toggle a task as done or undone
 
