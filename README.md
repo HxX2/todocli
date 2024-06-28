@@ -37,17 +37,17 @@ To add a task to the list
 ```console
 todo -a <>
 ```
-To add a task to the list
+Toggle a task as done or undone
 
 ```console
-todo -t <Number of task>
+todo -t <Task number>
 ```
-To add a task to the list
+Remove a Task from the list
 
 ```console
-todo -r <Number of task>
+todo -r <Task Number>
 ```
-opens editor to edite the raw file of the list (it uses the $EDITOR env var)
+Opens editor to edite the raw file of the list (it uses the $EDITOR env var)
 
 ```console
 todo -e 
