@@ -18,7 +18,8 @@ Todo CLI
 
 ## About
 
-Todo CLI is a simple to do list to manage your tasks. Written in GO and styled with [Nerd Fonts](https://www.nerdfonts.com/)
+Todo CLI is a simple to do list to manage your tasks.
+Written in GO and styled with [Nerd Fonts](https://www.nerdfonts.com/)
 
 ### Installing
 
