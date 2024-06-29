@@ -23,7 +23,15 @@ Written in GO and styled with [Nerd Fonts](https://www.nerdfonts.com/)
 
 ### Installing
 
-Move the binary in the bin dir to your desired binary's dir
+```console
+./install.sh
+```
+
+### Uninstalling
+
+```console
+./uninstall.sh
+```
 
 ### Build From Source
 
