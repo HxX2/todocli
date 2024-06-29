@@ -13,6 +13,13 @@ import (
 
 var todoFile string
 
+func error(msg string)  {
+  color.Set(color.FgRed, color.Bold)
+  fmt.Print("Error: ")
+  color.Set(color.Reset)
+  println(msg)
+}
+
 func printList() {
   i := 1
   file, err := os.Open(todoFile)
@@ -40,7 +47,7 @@ func printList() {
     color.Set(color.FgWhite, color.Faint)
     fmt.Printf("%2d  ", i)
     color.Set(color.Reset)
-    if (strings.Contains(line, "X")) {
+    if strings.Contains(line, "X") {
       color.Set(color.FgGreen)
       fmt.Print("  ")
       color.Set(color.Reset)
@@ -57,7 +64,7 @@ func printList() {
   }
   
   if err := scanner.Err(); err != nil {
-    fmt.Println("error")
+    error("Can't read file")
   }
 }
 
@@ -66,7 +73,7 @@ func remTask(taskId int) {
   file, err := os.Open(todoFile)
 
   if err != nil {
-    fmt.Println("error")
+    error("Can't open file")
   }
 
   defer file.Close()
@@ -77,19 +84,19 @@ func remTask(taskId int) {
   
   for scanner.Scan() {
     line := scanner.Text()
-    if (i != taskId) {
+    if i != taskId {
       newLines = append(newLines, line)
    }
     i++
   }
   
   if err := scanner.Err(); err != nil {
-    fmt.Println("error")
+    error("Can't read file")
   }
 
   file, err = os.Create(todoFile)
   if err != nil {
-    fmt.Println("Error reading file", err)
+    error("Can't create file")
     return
   } 
   defer file.Close()
@@ -105,7 +112,7 @@ func addTask(task string) {
   file, err := os.OpenFile(todoFile, os.O_APPEND | os.O_WRONLY, 0644)
 
   if err != nil {
-    fmt.Println("Error opening file:", err)
+    error("Can't open file")
   }
   defer file.Close()
 
@@ -113,7 +120,7 @@ func addTask(task string) {
 
   _, err = file.WriteString(ftask)
   if err != nil {
-    fmt.Println("Error wiriting to file", err)
+    error("Can't write in file")
     return
   }
 
@@ -125,7 +132,7 @@ func togleTask(taskId int) {
   file, err := os.Open(todoFile)
 
   if err != nil {
-    fmt.Println("error")
+    error("Can't open file")
   }
 
   defer file.Close()
@@ -136,8 +143,8 @@ func togleTask(taskId int) {
   
   for scanner.Scan() {
     line := scanner.Text()
-    if (i == taskId) {
-      if (strings.Contains(line, "X")) {
+    if i == taskId {
+      if strings.Contains(line, "X") {
         line = strings.Replace(line, "X", "", 1)
       } else {
         line = strings.Replace(line, "[", "[X", 1)
@@ -148,12 +155,12 @@ func togleTask(taskId int) {
   }
   
   if err := scanner.Err(); err != nil {
-    fmt.Println("error")
+    error("Can't read file")
   }
 
   file, err = os.Create(todoFile)
   if err != nil {
-    fmt.Println("Error reading file", err)
+    error("Can't read file")
     return
   } 
   defer file.Close()
@@ -169,14 +176,15 @@ func openEditor() {
   editor := os.Getenv("EDITOR")
 
   if editor == ""{
-    fmt.Println("Error opening editor", "must set EDITOR environnement variable")
+    error("Can't open editor [$EDITOR is to not set]")
     return
   }
 
   err := exec.Command(editor, todoFile).Run()
   
   if err != nil {
-    fmt.Println("Error running the command:", err)
+    error("Failed to open editor")
+    fmt.Println(err)
     return
   }
 }
@@ -191,19 +199,22 @@ func todoInit()  {
   if os.IsNotExist(err) {
     err = os.MkdirAll(configDir, 0755)
     if err != nil {
-        fmt.Println("Error creating directory:", err)
+        error("Can't create config directory")
+        fmt.Println(err)
         return
     }
 
     file, err := os.Create(filePath)
     if err != nil {
-        fmt.Println("Error creating file:", err)
+        error("Can't create todo.txt file")
+        fmt.Println(err)
         return
     }
 
     file.Close()
   } else if err != nil {
-      fmt.Println("Error checking file:", err)
+      error("Can't check file")
+      fmt.Println(err)
       return
   }
 
