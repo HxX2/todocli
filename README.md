@@ -11,8 +11,9 @@ Todo CLI
 
 - [About](#about)
   * [Installing](#installing)
-  * [Build From Source](#post-installation)
-  * [Usage](#uninstalling)
+  * [Uninstalling](#uninstalling)
+  * [Build From Source](#build-from-source)
+  * [Usage](#usage)
 
 <!-- tocstop -->
 
