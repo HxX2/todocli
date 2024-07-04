@@ -47,7 +47,7 @@ func printList() {
     color.Set(color.FgWhite, color.Faint)
     fmt.Printf("%2d  ", i)
     color.Set(color.Reset)
-    if strings.Contains(line, "X") {
+    if strings.Contains(line, "[X]") {
       color.Set(color.FgGreen)
       fmt.Print("  ")
       color.Set(color.Reset)
@@ -144,8 +144,8 @@ func togleTask(taskId int) {
   for scanner.Scan() {
     line := scanner.Text()
     if i == taskId {
-      if strings.Contains(line, "X") {
-        line = strings.Replace(line, "X", "", 1)
+      if strings.Contains(line, "[X]") {
+        line = strings.Replace(line, "[X", "[", 1)
       } else {
         line = strings.Replace(line, "[", "[X", 1)
       }
@@ -176,7 +176,7 @@ func openEditor() {
   editor := os.Getenv("EDITOR")
 
   if editor == ""{
-    error("Can't open editor [$EDITOR is to not set]")
+    error("Can't open editor [no $EDITOR env]")
     return
   }
 
