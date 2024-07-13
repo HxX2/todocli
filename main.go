@@ -20,7 +20,7 @@ func error(msg string)  {
   println(msg)
 }
 
-func printList() {
+func printList(listDone bool, listUndone bool) {
   i := 1
   file, err := os.Open(todoFile)
 
@@ -44,17 +44,20 @@ func printList() {
 
   for scanner.Scan() {
     line := scanner.Text()
-    color.Set(color.FgWhite, color.Faint)
-    fmt.Printf("%2d  ", i)
-    color.Set(color.Reset)
-    if strings.Contains(line, "[X]") {
+    if strings.Contains(line, "[X]") && listDone {
+      color.Set(color.FgWhite, color.Faint)
+      fmt.Printf("%2d  ", i)
+      color.Set(color.Reset)
       color.Set(color.FgGreen)
       fmt.Print("  ")
       color.Set(color.Reset)
       color.Set(color.Bold, color.CrossedOut)
       fmt.Println(line[4:])
       color.Set(color.Reset)
-    } else {
+    } else if strings.Contains(line, "[]") && listUndone {
+      color.Set(color.FgWhite, color.Faint)
+      fmt.Printf("%2d  ", i)
+      color.Set(color.Reset)
       fmt.Print("  ")
       color.Set(color.Bold)
       fmt.Println(line[3:])
@@ -105,7 +108,7 @@ func remTask(taskId int) {
     fmt.Fprintln(file, line)
   }
 
-  printList()
+  printList(true, true)
 }
 
 func addTask(task string) {
@@ -124,7 +127,7 @@ func addTask(task string) {
     return
   }
 
- printList()
+ printList(true, true)
 }
 
 func togleTask(taskId int) {
@@ -169,7 +172,7 @@ func togleTask(taskId int) {
     fmt.Fprintln(file, line)
   }
 
-  printList()
+  printList(true, true)
 }
 
 func openEditor() {
@@ -229,13 +232,17 @@ func main()  {
   remPtr := flag.Int("r", 0, "remove a task")
   donePtr := flag.Int("t", 0, "toggle done for a task")
   editPtr := flag.Bool("e", false, "edite todo file")
-
+  listDonePtr := flag.Bool("ld", false, "list done tasks")
+  listUndonePtr := flag.Bool("lu", false, "list undone tasks")
+ 
   flag.Parse()
 
   remTaskNum := *remPtr
   newTask := *addPtr
   togleTaskNum := *donePtr
-  editFlag := *editPtr  
+  editFlag := *editPtr
+  listUndoneFlag := *listUndonePtr 
+  listDoneFlag := *listDonePtr 
   
   switch {
     case remTaskNum != 0:
@@ -246,8 +253,12 @@ func main()  {
       togleTask(togleTaskNum)
     case editFlag:
       openEditor()
+    case listDoneFlag:
+      printList(true, false)
+    case listUndoneFlag:
+      printList(false, true)
     default:
-      printList()
+      printList(true, true)
   }
 }
 

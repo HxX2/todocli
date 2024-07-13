@@ -64,3 +64,15 @@ Opens editor to edite the raw file of the list (it uses the $EDITOR env var)
 ```console
 todo -e 
 ```
+
+List done tasks
+
+```console
+todo -ld
+```
+
+List undone tasks
+
+```console
+todo -lu
+```
