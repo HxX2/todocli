@@ -2,7 +2,7 @@ Todo CLI
 ============
 
 
-![prompt](https://raw.githubusercontent.com/HxX2/todocli/main/images/todo.png)
+![prompt](https://raw.githubusercontent.com/HxX2/todocli/main/.github/assets/todo.png)
 
 
 **Table of Contents**
@@ -25,13 +25,13 @@ Written in GO and styled with [Nerd Fonts](https://www.nerdfonts.com/)
 ### Installing
 
 ```console
-./install.sh
+GOBIN=<your install path> go install
 ```
 
 ### Uninstalling
 
 ```console
-./uninstall.sh
+rm -rf <your install path>/todo
 ```
 
 ### Build From Source
