@@ -20,9 +20,36 @@ func error(msg string)  {
   println(msg)
 }
 
+func progress(nd float32, nu float32)  {
+  lineWidth := float32(50)
+  nt := nu + nd
+  doneWidth := lineWidth * (nd / nt)
+  undoneWidth := (lineWidth - doneWidth) - 1
+  percent := (nd / nt) * 100
+
+  fmt.Print("\n")
+  color.Set(color.FgGreen)
+  for i := 0; i < int(doneWidth); i++ {
+    fmt.Print("━")
+  }
+
+  color.Set(color.FgWhite, color.Faint)
+  if nu != 0 {
+    fmt.Print("╺")
+  }
+  for i := 0; i < int(undoneWidth); i++ {
+    fmt.Print("━")
+  }
+  color.Set(color.Reset)
+
+  fmt.Printf(" %d%% Done\n", int(percent))
+}
+
 func printList(listDone bool, listUndone bool) {
   i := 1
   file, err := os.Open(todoFile)
+  var nd float32 = 0
+  var nu float32 = 0
 
   if err != nil {
     fmt.Println("error")
@@ -54,6 +81,7 @@ func printList(listDone bool, listUndone bool) {
       color.Set(color.Bold, color.CrossedOut)
       fmt.Println(line[4:])
       color.Set(color.Reset)
+      nd++
     } else if strings.Contains(line, "[]") && listUndone {
       color.Set(color.FgWhite, color.Faint)
       fmt.Printf("%2d  ", i)
@@ -62,8 +90,13 @@ func printList(listDone bool, listUndone bool) {
       color.Set(color.Bold)
       fmt.Println(line[3:])
       color.Set(color.Reset)
+      nu++
     }
     i++
+  }
+
+  if listDone && listUndone && (nu != 0 || nd != 0) {
+    progress(nd, nu)
   }
   
   if err := scanner.Err(); err != nil {
