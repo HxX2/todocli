@@ -22,8 +22,9 @@ func main() {
 	newTask := *addPtr
 	toggleTaskNum := *togglePtr
 	editFlag := *editPtr
-	listUndoneFlag := *listUndonePtr
-	listDoneFlag := *listDonePtr
+
+	t.ListDone = !*listUndonePtr
+	t.ListUndone = !*listDonePtr
 
 	switch {
 	case remTaskNum != 0:
@@ -34,11 +35,9 @@ func main() {
 		t.ToggleTask(toggleTaskNum)
 	case editFlag:
 		t.OpenEditor()
-	case listDoneFlag:
-		t.ListUndone = false
+	case t.ListUndone:
 		t.PrintList()
-	case listUndoneFlag:
-		t.ListDone = false
+	case t.ListDone:
 		t.PrintList()
 	default:
 		t.PrintList()
