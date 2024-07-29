@@ -75,7 +75,7 @@ func (t Todo) AddTask(task string) {
 	t.PrintList()
 }
 
-func (t Todo) togleTask(taskId int) {
+func (t Todo) ToggleTask(taskId int) {
 	newLines := make([]string, 0)
 	todoFile := file.Open(t.filePath)
 	defer todoFile.Close()
@@ -104,7 +104,7 @@ func (t Todo) togleTask(taskId int) {
 	t.PrintList()
 }
 
-func (t Todo) openEditor() {
+func (t Todo) OpenEditor() {
 	editor := os.Getenv("EDITOR")
 
 	if editor == "" {
