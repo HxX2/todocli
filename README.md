@@ -2,7 +2,7 @@ Todo CLI
 ============
 
 
-![prompt](https://raw.githubusercontent.com/HxX2/todocli/main/.github/assets/todo.gif)
+![prompt](https://raw.githubusercontent.com/HxX2/todocli/v1.0.0/.github/assets/todo.gif)
 
 
 **Table of Contents**
