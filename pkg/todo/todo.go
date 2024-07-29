@@ -9,7 +9,10 @@ import (
 )
 
 type Todo struct {
-	filePath     string
+	filePath    string
+	doneCount   float64
+	undoneCount float64
+
 	ListDone     bool
 	ListUndone   bool
 	ShowProgress bool
@@ -44,7 +47,9 @@ func Init() *Todo {
 	todo.filePath = filePath
 	todo.ListDone = true
 	todo.ListUndone = true
-	todo.ShowProgress = false
+	todo.ShowProgress = true
+	todo.doneCount = 0
+	todo.undoneCount = 0
 
 	return todo
 }

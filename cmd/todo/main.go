@@ -15,6 +15,7 @@ func main() {
 	editPtr := flag.Bool("e", false, "edite todo file")
 	listDonePtr := flag.Bool("ld", false, "list done tasks")
 	listUndonePtr := flag.Bool("lu", false, "list undone tasks")
+	hideProgressPtr := flag.Bool("hp", false, "hide progress bar")
 
 	flag.Parse()
 
@@ -25,6 +26,7 @@ func main() {
 
 	t.ListDone = !*listUndonePtr
 	t.ListUndone = !*listDonePtr
+	t.ShowProgress = !*hideProgressPtr
 
 	switch {
 	case remTaskNum != 0:

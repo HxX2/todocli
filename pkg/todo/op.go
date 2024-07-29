@@ -30,13 +30,17 @@ func (t Todo) PrintList() {
 			pprint.Print(fmt.Sprintf("%2d  ", i), color.FgWhite, color.Faint)
 			pprint.Print("  ", color.FgGreen)
 			pprint.Print(fmt.Sprintf("%s\n", line[4:]), color.Bold, color.CrossedOut)
+			t.doneCount++
 		} else if strings.Contains(line, "[]") && t.ListUndone {
 			pprint.Print(fmt.Sprintf("%2d  ", i), color.FgWhite, color.Faint)
 			pprint.Print("  ")
 			pprint.Print(fmt.Sprintf("%s\n", line[3:]), color.Bold)
+			t.undoneCount++
 		}
 		i++
 	}
+
+	t.printProgress()
 
 	if err := scanner.Err(); err != nil {
 		pprint.Error("Can't read file")
@@ -118,4 +122,31 @@ func (t Todo) OpenEditor() {
 		pprint.Error(fmt.Sprintf("Failed to open editor\n%s\n", err))
 		return
 	}
+}
+
+func (t Todo) printProgress() {
+	if !t.ShowProgress || !t.ListDone || !t.ListUndone || (t.doneCount == 0 && t.undoneCount == 0) {
+		return
+	}
+
+	lineWidth := 50.0
+	total := t.doneCount + t.undoneCount
+	doneWidth := lineWidth * (t.doneCount / total)
+	undoneWidth := (lineWidth - doneWidth) - 1
+	percentage := (t.doneCount / total) * 100
+
+	fmt.Print("\n")
+	for i := 0; i < int(doneWidth); i++ {
+		pprint.Print("━", color.FgGreen)
+	}
+
+	if t.undoneCount != 0 {
+		pprint.Print("╺", color.FgWhite, color.Faint)
+	}
+
+	for i := 0; i < int(undoneWidth); i++ {
+		pprint.Print("━", color.FgWhite, color.Faint)
+	}
+
+	fmt.Printf(" %d%% Done\n", int(percentage))
 }
