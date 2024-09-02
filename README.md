@@ -2,7 +2,7 @@ Todo CLI
 ============
 
 
-![prompt](https://raw.githubusercontent.com/HxX2/todocli/main/.github/assets/todo.png)
+![prompt](https://raw.githubusercontent.com/HxX2/todocli/v1.0.0/.github/assets/todo.gif)
 
 
 **Table of Contents**
@@ -25,7 +25,7 @@ Written in GO and styled with [Nerd Fonts](https://www.nerdfonts.com/)
 ### Installing
 
 ```console
-GOBIN=<your install path> go install
+GOBIN=<your install path> go install ./cmd/todo
 ```
 
 ### Uninstalling
@@ -39,7 +39,7 @@ rm -rf <your install path>/todo
 Install Go and build with this command:
 
 ```console
-go build
+go build ./cmd/todo 
 ```
 
 ### Usage
@@ -75,4 +75,10 @@ List undone tasks
 
 ```console
 todo -lu
+```
+
+Hide Progress bar (can be used with other options)
+
+```console
+todo -hp
 ```
