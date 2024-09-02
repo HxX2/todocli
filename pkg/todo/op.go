@@ -116,7 +116,12 @@ func (t Todo) OpenEditor() {
 		return
 	}
 
-	err := exec.Command(editor, t.filePath).Run()
+	cmd := exec.Command(editor, t.filePath)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+
+	err := cmd.Run()
 
 	if err != nil {
 		pprint.Error(fmt.Sprintf("Failed to open editor\n%s\n", err))
