@@ -179,8 +179,14 @@ func openEditor() {
 		error("Can't open editor [no $EDITOR env]")
 		return
 	}
+	// Set up the command to use standard input/output/error
+	cmd := exec.Command(editor, todoFile)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 
-	err := exec.Command(editor, todoFile).Run()
+	// Run the command
+	err := cmd.Run()
 	if err != nil {
 		error("Failed to open editor")
 		fmt.Println(err)
