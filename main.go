@@ -32,6 +32,7 @@ func printList(listDone bool, listUndone bool) {
 
 	scanner := bufio.NewScanner(file)
 
+	fmt.Print("\n")
 	color.Set(color.FgMagenta)
 	fmt.Print("")
 	color.Set(color.BgMagenta, color.FgBlack, color.Bold)
