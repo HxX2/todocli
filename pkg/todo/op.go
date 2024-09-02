@@ -19,6 +19,7 @@ func (t Todo) PrintList() {
 
 	scanner := bufio.NewScanner(file)
 
+	pprint.Print("\n", color.FgMagenta)
 	pprint.Print("", color.FgMagenta)
 	pprint.Print("      ToDo List      ", color.BgMagenta, color.FgBlack, color.Bold)
 	pprint.Print("\n\n", color.FgMagenta)
@@ -115,9 +116,14 @@ func (t Todo) OpenEditor() {
 		pprint.Error("Can't open editor [no $EDITOR env]")
 		return
 	}
+	// Set up the command to use standard input/output/error
+	cmd := exec.Command(editor, t.filePath)
+	cmd.Stdin = os.Stdin
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
 
-	err := exec.Command(editor, t.filePath).Run()
-
+	// Run the command
+	err := cmd.Run()
 	if err != nil {
 		pprint.Error(fmt.Sprintf("Failed to open editor\n%s\n", err))
 		return
