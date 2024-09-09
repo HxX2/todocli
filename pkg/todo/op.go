@@ -72,7 +72,13 @@ func (t Todo) RemTask(taskId int) {
 }
 
 func (t Todo) AddTask(task string) {
-	ftask := fmt.Sprintf("\n[] %s", task)
+	var ftask string
+
+	if file.Size(t.filePath) == 0 {
+		ftask = fmt.Sprintf("[] %s", task)
+	} else {
+		ftask = fmt.Sprintf("\n[] %s", task)
+	}
 
 	file.Write(t.filePath, ftask, os.O_APPEND)
 

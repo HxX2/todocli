@@ -31,3 +31,18 @@ func Write(filePath string, content string, flag int) {
 		return
 	}
 }
+
+func Size(filepath string) int64 {
+	file, err := os.Open(filepath)
+	if err != nil {
+		pprint.Error(fmt.Sprintf("Can't open %s", filepath))
+	}
+	defer file.Close()
+
+	fileStat, err := file.Stat()
+	if err != nil {
+		pprint.Error(fmt.Sprintf("Can't get file stat %s", filepath))
+	}
+
+	return fileStat.Size()
+}
