@@ -44,6 +44,11 @@ go build ./cmd/todo
 
 ### Usage
 
+To init a todo list in the current git directory
+```console
+todo -i
+```
+
 To add a task to the list
 
 ```console
