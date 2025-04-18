@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"os/exec"
+	"path/filepath"
 	"strings"
 
 	"github.com/fatih/color"
@@ -20,7 +21,7 @@ func (t Todo) PrintList() {
 	scanner := bufio.NewScanner(file)
 
 	pprint.Print("", color.FgMagenta)
-	pprint.Print("      ToDo List      ", color.BgMagenta, color.FgBlack, color.Bold)
+	pprint.Print("     "+t.listName+" ToDo List      ", color.BgMagenta, color.FgBlack, color.Bold)
 	pprint.Print("\n\n", color.FgMagenta)
 
 	i := 1
@@ -133,6 +134,29 @@ func (t Todo) OpenEditor() {
 		pprint.Error(fmt.Sprintf("Failed to open editor\n%s\n", err))
 		return
 	}
+}
+
+func (t Todo) ProjectInit() {
+	gitRoot := file.GetGitRoot()
+	if gitRoot == "" {
+		pprint.Error("Not in a git repository\n")
+		return
+	}
+
+	todoFile := filepath.Join(gitRoot, "todo.txt")
+
+	_, err := os.Stat(todoFile)
+	if os.IsNotExist(err) {
+		file, err := os.Create(todoFile)
+		defer file.Close()
+		if err != nil {
+			pprint.Error(fmt.Sprintf("Can't create todo.txt file\n%s\n", err))
+			return
+		}
+	}
+
+	pprint.Print("todo file created successfully in 󰊢 root \n", color.FgGreen, color.Bold)
+
 }
 
 func (t Todo) printProgress() {

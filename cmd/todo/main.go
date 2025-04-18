@@ -16,6 +16,7 @@ func main() {
 	listDonePtr := flag.Bool("ld", false, "list done tasks")
 	listUndonePtr := flag.Bool("lu", false, "list undone tasks")
 	hideProgressPtr := flag.Bool("hp", false, "hide progress bar")
+	initPtr := flag.Bool("i", false, "initialize todo file in git project")
 
 	flag.Parse()
 
@@ -23,6 +24,7 @@ func main() {
 	newTask := *addPtr
 	toggleTaskNum := *togglePtr
 	editFlag := *editPtr
+	initFlag := *initPtr
 
 	t.ListDone = !*listUndonePtr
 	t.ListUndone = !*listDonePtr
@@ -37,6 +39,8 @@ func main() {
 		t.ToggleTask(toggleTaskNum)
 	case editFlag:
 		t.OpenEditor()
+	case initFlag:
+		t.ProjectInit()
 	case t.ListUndone:
 		t.PrintList()
 	case t.ListDone:

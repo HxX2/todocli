@@ -3,6 +3,7 @@ package file
 import (
 	"fmt"
 	"os"
+	"os/exec"
 
 	"github.com/HxX2/todo/pkg/pprint"
 )
@@ -45,4 +46,15 @@ func Size(filepath string) int64 {
 	}
 
 	return fileStat.Size()
+}
+
+func GetGitRoot() string {
+	output, err := exec.Command("git", "rev-parse", "--show-toplevel").Output()
+	if err != nil {
+		return ""
+	}
+
+	gitRoot := string(output[:len(output)-1])
+
+	return gitRoot
 }

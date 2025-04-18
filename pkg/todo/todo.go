@@ -5,11 +5,13 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/HxX2/todo/pkg/file"
 	"github.com/HxX2/todo/pkg/pprint"
 )
 
 type Todo struct {
 	filePath    string
+	listName    string
 	doneCount   float64
 	undoneCount float64
 
@@ -42,6 +44,17 @@ func Init() *Todo {
 	} else if err != nil {
 		pprint.Error(fmt.Sprintf("Can't check file\n%s\n", err))
 		return nil
+	}
+
+	gitRoot := file.GetGitRoot()
+	if gitRoot != "" {
+		gitFilePath := filepath.Join(gitRoot, "todo.txt")
+
+		_, err := os.Stat(gitFilePath)
+		if !os.IsNotExist(err) {
+			filePath = gitFilePath
+			todo.listName = "󰊢 " + filepath.Base(gitRoot)
+		}
 	}
 
 	todo.filePath = filePath
