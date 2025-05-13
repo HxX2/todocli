@@ -12,7 +12,7 @@ func main() {
 	addPtr := flag.String("a", "", "add a task")
 	remPtr := flag.Int("r", 0, "remove a task")
 	togglePtr := flag.Int("t", 0, "toggle done for a task")
-	editPtr := flag.Bool("e", false, "edite todo file")
+	editPtr := flag.Bool("e", false, "edit todo file")
 	listDonePtr := flag.Bool("ld", false, "list done tasks")
 	listUndonePtr := flag.Bool("lu", false, "list undone tasks")
 	hideProgressPtr := flag.Bool("hp", false, "hide progress bar")
